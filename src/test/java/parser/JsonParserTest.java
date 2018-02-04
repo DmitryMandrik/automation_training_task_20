@@ -1,20 +1,18 @@
 package parser;
 
+import com.google.gson.JsonElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import shop.Cart;
 import shop.RealItem;
 import shop.VirtualItem;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Test
-class JsonParserTest {
+public class JsonParserTest {
 
     private static final double BOOK_PRICE = 25.2;
     private static final double SOFT_PRICE = 99.0;
@@ -39,8 +37,12 @@ class JsonParserTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Object[][]{{cartFilesList.get(0)}, {cartFilesList.get(1)}, {cartFilesList.get(2)},
-                {cartFilesList.get(3)}, {cartFilesList.get(4)}};
+        Object[][] returnValue = new Object[cartFilesList.size()][1];
+        int index = 0;
+        for (Object[] each : returnValue) {
+            each[0] = cartFilesList.get(index++);
+        }
+        return returnValue;
     }
 
     private Cart addItemsToCartTest() {
