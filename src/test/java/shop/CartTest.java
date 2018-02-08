@@ -13,7 +13,6 @@ class CartTest {
     private Cart cart;
 
     private Cart addItemsToCartTest() {
-
         RealItem rItem = new RealItem();
         rItem.setName("Book");
         rItem.setPrice(BOOK_PRICE);
@@ -35,7 +34,6 @@ class CartTest {
 
     @Test
     void verifyThatGetPriceReturnsCorrectValueTest() {
-
         Assert.assertEquals(SOFT_PRICE + SOFT_PRICE * 0.2 + BOOK_PRICE + BOOK_PRICE * 0.2, cart.getTotalPrice());
     }
 

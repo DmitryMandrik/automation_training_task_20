@@ -3,6 +3,7 @@ package parser;
 import com.google.gson.JsonElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import shop.Cart;
 import shop.RealItem;
 import shop.VirtualItem;
@@ -16,8 +17,8 @@ public class JsonParserTest {
 
     private static final double BOOK_PRICE = 25.2;
     private static final double SOFT_PRICE = 99.0;
-    private static final String PATH_TO_CART_LIST = "/Users/dmitrymandrik/Documents/training/testng-maven/src/test/java/datasets/carts.txt";
-    private static final String PATH_TO_CART = "/Users/dmitrymandrik/Documents/training/testng-maven/src/main/resources/john-cart.json";
+    private static final String PATH_TO_CART_LIST = "src/test/java/datasets/carts.txt";
+    private static final String PATH_TO_CART = "src/main/resources/john-cart.json";
     private Cart cart;
     private JsonParser parser;
 
@@ -46,7 +47,6 @@ public class JsonParserTest {
     }
 
     private Cart addItemsToCartTest() {
-
         RealItem rItem = new RealItem();
         rItem.setName("Book");
         rItem.setWeight(1.5);
@@ -93,12 +93,14 @@ public class JsonParserTest {
 
     @Test
     void validateCorrectRealItemWrittenToFileTest() {
+        SoftAssert softAssert = new SoftAssert();
         Cart johnCart = parser.readFromFile(new File(PATH_TO_CART));
         List<RealItem> expectedResultName = cart.getRealItems();
         List<RealItem> actualResultName = johnCart.getRealItems();
-        Assert.assertEquals(expectedResultName.get(0).getWeight(), actualResultName.get(0).getWeight());
-        Assert.assertEquals(expectedResultName.get(0).getPrice(), actualResultName.get(0).getPrice());
-        Assert.assertEquals(expectedResultName.get(0).getName(), actualResultName.get(0).getName());
+        softAssert.assertEquals(expectedResultName.get(0).getWeight(), actualResultName.get(0).getWeight());
+        softAssert.assertEquals(expectedResultName.get(0).getPrice(), actualResultName.get(0).getPrice());
+        softAssert.assertEquals(expectedResultName.get(0).getName(), actualResultName.get(0).getName());
+        softAssert.assertAll();
     }
 
     @AfterClass
