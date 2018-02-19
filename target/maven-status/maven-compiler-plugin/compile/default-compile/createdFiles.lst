@@ -1,8 +1,0 @@
-shop/Cart.class
-Main.class
-parser/NoSuchFileException.class
-shop/Item.class
-parser/Parser.class
-shop/VirtualItem.class
-parser/JsonParser.class
-shop/RealItem.class

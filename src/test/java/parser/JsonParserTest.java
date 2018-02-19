@@ -1,6 +1,5 @@
 package parser;
 
-import com.google.gson.JsonElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -25,25 +24,21 @@ public class JsonParserTest {
     @DataProvider
     private Object[][] setCartFilesList() {
         BufferedReader in;
-        List<String> cartFilesList = new ArrayList<>();
+        List<String[]> cartFilesList = new ArrayList<>();
 
         try {
             in = new BufferedReader(new FileReader(PATH_TO_CART_LIST));
             String str;
 
             while ((str = in.readLine()) != null) {
-                cartFilesList.add(str);
+                String[] str_arr = str.split(", ");
+                cartFilesList.add(str_arr);
             }
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Object[][] returnValue = new Object[cartFilesList.size()][1];
-        int index = 0;
-        for (Object[] each : returnValue) {
-            each[0] = cartFilesList.get(index++);
-        }
-        return returnValue;
+        return cartFilesList.toArray(new Object[0][]);
     }
 
     private Cart addItemsToCartTest() {
@@ -71,8 +66,10 @@ public class JsonParserTest {
     }
 
     @Test(expectedExceptions = NoSuchFileException.class, dataProvider = "setCartFilesList")
-    void readFromFileTest(String file) {
-        parser.readFromFile(new File(file));
+    void readFromFileTest(String file, String bool) {
+        if (Boolean.valueOf(bool)){
+            parser.readFromFile(new File(file));
+        }
     }
 
     @Test
